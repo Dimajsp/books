@@ -1,0 +1,95 @@
+books = [
+    "Тихий Дон",
+    "Гарри Потер и философский камень",
+    "Сто лет одиночества",
+    "Великий Гэтсби",
+    "Над пропастью во ржи"
+]
+
+def show_menu():
+    print("/n== ЧИТАТЕЛЬСКИЙ ДНЕВНИК ===")
+    print("1 - Добавить книгу")
+    print("2 - Показать все книги")
+    print("3 - Показать последние 5 прочитанных книг")
+    print("4 - Заменить название по номеру")
+    print("5 - Поиск по названию")
+    print("6 - Статистика")
+    print("7 - Выход")
+
+def add_books():
+    name = input("Введите название книги: ")
+    if name.strip() != "":
+        books.append(name.strip())
+        print("Книга была добавлена!")
+def show_books():
+    print(*books, sep="\n")
+def find_book():
+    if len(books) == 0:
+        print("Не найдена!")
+    else:
+        n = input()
+        if n == "":
+            print("Не найдена")
+        else:
+            found = False
+            for i in range(len(books)):
+                if n in books[i].lower():
+                    print(f"{i + 1}. {books[i]}")
+                    found = True
+            if not found:
+                print("Не найдено")
+
+def show_last_books():
+    if len(books) <= 5:
+        print(*books, sep="\n")
+    else:
+        print(*books[-5:], sep="\n")
+
+
+def replace_book():
+    n = int(input("Введите номер книги для замены: "))
+    a = input("Введите название книги для замены: ").strip()
+    if n <= len(books):
+        if a != "":
+            books[n - 1] = a
+
+def search_books():
+    query = input("Введите слово или часть названия: ").strip().lower()
+    if not query:
+        print("Ошибка: поисковый запрос не может быть пустым.")
+        return
+    found = False
+    for i in range(len(books)):
+        if query in books[i].lower():
+            print(f"{i + 1}. {books[i]}")
+            found = True
+        if not found:
+            print("Ничего не найдено.")
+
+
+def show_stats():
+    if not books:
+        print("Дневник пуст.")
+        return
+    print(f"Всего книг прочитано: {len(books)}")
+    print(f'Первая книга: "{books[0]}"')
+    print(f'Последняя книга: "{books[-1]}"')
+
+
+while True:
+    show_menu()
+    number = int(input())
+    if number == 1:
+        add_books()
+    if number == 2:
+        show_books()
+    if number == 3:
+        show_last_books()
+    if number == 5:
+        find_book()
+    if number == 4:
+        replace_book()
+    if number == 6:
+        show_stats()
+    if number == 0:
+        break
